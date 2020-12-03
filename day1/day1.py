@@ -15,8 +15,8 @@ def part1():
             if(sub_item == diff):
                 print(sub_item, item)
                 return sub_item*item
+print(part1())
 
-part1()
 def part2():
     input = []
     with open('input.txt', 'r') as reader:
@@ -36,5 +36,4 @@ def part2():
                 if(num3 == diff2):
                     print(num1, num2, num3)
                     return num1*num2*num3
-
-part2()
+print(part2())

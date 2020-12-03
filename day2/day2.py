@@ -23,7 +23,7 @@ def part1():
         if count <= range_top and count >= range_bottom:
             valid_count+=1
     return valid_count
-#part1()
+print(part1())
 
 def part2():
     input_raw = []
@@ -48,4 +48,4 @@ def part2():
             valid_count+=1
     return valid_count
 
-part2()
+print(part2())
