@@ -16,7 +16,7 @@ def part1():
                 print(sub_item, item)
                 return sub_item*item
 
-
+part1()
 def part2():
     input = []
     with open('input.txt', 'r') as reader:
