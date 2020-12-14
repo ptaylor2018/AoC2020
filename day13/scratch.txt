@@ -1,0 +1,7 @@
+if 7 and 13 leave at the same time stamp at multiples of both of them, what if one is one step off?
+
+7*13 = 91
+
+t % 7 = 0
+(t + 1) % 13 = 0
+check multiple of seven, 
