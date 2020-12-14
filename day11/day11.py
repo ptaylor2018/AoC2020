@@ -1,43 +1,138 @@
+import copy
 def part1():
     input_raw = []
-    with open("small_input_day11.txt", "r") as reader:
+    with open("input_day11.txt", "r") as reader:
         # Read and print the entire file line by line
         for line in reader:
             input_raw.append(line)
     input_cleaned = []
     for item in input_raw:
         input_cleaned.append(item.rstrip())
-    print(input_cleaned)
+    input_cleaned = list(map(split, input_cleaned))
+        
+    #print(input_cleaned)
 
-    state = input_cleaned[:]
+    state = copy.deepcopy(input_cleaned)
     last_state = []
     while state != last_state:
-        last_state = state[:]
+        last_state = copy.deepcopy(state)
         for row in range(len(last_state)):
             for seat in range(len(last_state[row])):
+                #print(update_seat([row, seat],last_state))
                 state[row][seat] = update_seat([row, seat],last_state)
-    return state
+    full_seats = 0
+    for row in state:
+        for seat in row:
+            if seat =="#":
+                full_seats+=1
+    return full_seats
+
+def split(word): 
+    return [char for char in word]  
 
 def update_seat(loc, map):
-    num_empty = count_empty_around(loc, map)
-    if map[loc[0]][loc[1]] == "L" and num_empty == 8:
+    num_full = count_full_around(loc, map)
+    if map[loc[0]][loc[1]] == "L" and num_full == 0:
         return "#"
-    elif map[loc[0]][loc[1]] == "#" and num_empty <= 4:
+    elif map[loc[0]][loc[1]] == "#" and num_full >= 4:
         return "L"
     else:
         return map[loc[0]][loc[1]]
 
-def count_empty_around(loc, map):
+def count_full_around(loc, map):
     count = 0
-    if loc[0] - 1 < 0:
-        count += 3
-    else: 
-        
-    if loc[0] + 1 >= len(map):
-        count += 3
-    if loc[1] - 1 < 0:
-        count += 3
-    if loc[0] + 1 >= len(map[0]):
-        count += 3
+    if not loc[0] - 1 < 0 and not loc[1] - 1 < 0:   #
+        if map[loc[0] - 1][loc[1] - 1] == "#":       #
+            count+=1                                #
+    if not loc[0] - 1 < 0:                          
+        if map[loc[0] - 1][loc[1]] == "#":             
+            count+=1
+    if not loc[0] - 1 < 0 and not loc[1] + 1 >= len(map[0]):
+        if map[loc[0] - 1][loc[1] + 1] == "#":
+            count+=1
+    if not loc[1] + 1 >= len(map[0]):
+        if map[loc[0]][loc[1] + 1] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map) and not loc[1] + 1 >= len(map[0]):
+        if map[loc[0]+ 1][loc[1] + 1] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map):
+        if map[loc[0]+ 1][loc[1]] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map) and not loc[1] - 1 < 0:
+        if map[loc[0]+ 1][loc[1] - 1] == "#":
+            count+=1 
+    if not loc[1] - 1 < 0:
+        if map[loc[0]][loc[1] - 1] == "#":
+            count+=1  
+    return count
     
 print(part1())
+
+import copy
+def part2():
+    input_raw = []
+    with open("input_day11.txt", "r") as reader:
+        # Read and print the entire file line by line
+        for line in reader:
+            input_raw.append(line)
+    input_cleaned = []
+    for item in input_raw:
+        input_cleaned.append(item.rstrip())
+    input_cleaned = list(map(split, input_cleaned))
+        
+    #print(input_cleaned)
+
+    state = copy.deepcopy(input_cleaned)
+    last_state = []
+    while state != last_state:
+        last_state = copy.deepcopy(state)
+        for row in range(len(last_state)):
+            for seat in range(len(last_state[row])):
+                #print(update_seat([row, seat],last_state))
+                state[row][seat] = update_seat_2([row, seat],last_state)
+    full_seats = 0
+    for row in state:
+        for seat in row:
+            if seat =="#":
+                full_seats+=1
+    return full_seats
+
+def update_seat_2(loc, map):
+    num_full = count_full_around_2(loc, map)
+    if map[loc[0]][loc[1]] == "L" and num_full == 0:
+        return "#"
+    elif map[loc[0]][loc[1]] == "#" and num_full >= 5:
+        return "L"
+    else:
+        return map[loc[0]][loc[1]]
+
+def count_full_around_2(loc, map):
+    count = 0
+    if not loc[0] - 1 < 0 and not loc[1] - 1 < 0:   #
+        if map[loc[0] - 1][loc[1] - 1] == "#":       #
+            count+=1                                #
+    if not loc[0] - 1 < 0:                          
+        if map[loc[0] - 1][loc[1]] == "#":             
+            count+=1
+    if not loc[0] - 1 < 0 and not loc[1] + 1 >= len(map[0]):
+        if map[loc[0] - 1][loc[1] + 1] == "#":
+            count+=1
+    if not loc[1] + 1 >= len(map[0]):
+        if map[loc[0]][loc[1] + 1] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map) and not loc[1] + 1 >= len(map[0]):
+        if map[loc[0]+ 1][loc[1] + 1] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map):
+        if map[loc[0]+ 1][loc[1]] == "#":
+            count+=1
+    if not loc[0] + 1 >= len(map) and not loc[1] - 1 < 0:
+        if map[loc[0]+ 1][loc[1] - 1] == "#":
+            count+=1 
+    if not loc[1] - 1 < 0:
+        if map[loc[0]][loc[1] - 1] == "#":
+            count+=1  
+    return count
+    
+print(part2())
