@@ -29,6 +29,15 @@ def update_seat(loc, map):
 
 def count_empty_around(loc, map):
     count = 0
-    if loc[0] - 1 is not < 0:
+    if loc[0] - 1 < 0:
+        count += 3
+    else: 
         
+    if loc[0] + 1 >= len(map):
+        count += 3
+    if loc[1] - 1 < 0:
+        count += 3
+    if loc[0] + 1 >= len(map[0]):
+        count += 3
+    
 print(part1())
