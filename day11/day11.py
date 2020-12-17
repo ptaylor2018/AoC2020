@@ -1,3 +1,4 @@
+import typing
 import copy
 def part1():
     input_raw = []
@@ -109,30 +110,33 @@ def update_seat_2(loc, map):
 
 def count_full_around_2(loc, map):
     count = 0
-    if not loc[0] - 1 < 0 and not loc[1] - 1 < 0:   #
-        if map[loc[0] - 1][loc[1] - 1] == "#":       #
-            count+=1                                #
-    if not loc[0] - 1 < 0:                          
-        if map[loc[0] - 1][loc[1]] == "#":             
-            count+=1
-    if not loc[0] - 1 < 0 and not loc[1] + 1 >= len(map[0]):
-        if map[loc[0] - 1][loc[1] + 1] == "#":
-            count+=1
-    if not loc[1] + 1 >= len(map[0]):
-        if map[loc[0]][loc[1] + 1] == "#":
-            count+=1
-    if not loc[0] + 1 >= len(map) and not loc[1] + 1 >= len(map[0]):
-        if map[loc[0]+ 1][loc[1] + 1] == "#":
-            count+=1
-    if not loc[0] + 1 >= len(map):
-        if map[loc[0]+ 1][loc[1]] == "#":
-            count+=1
-    if not loc[0] + 1 >= len(map) and not loc[1] - 1 < 0:
-        if map[loc[0]+ 1][loc[1] - 1] == "#":
-            count+=1 
-    if not loc[1] - 1 < 0:
-        if map[loc[0]][loc[1] - 1] == "#":
-            count+=1  
+    dirs = [(-1,-1),(-1, 0),(-1, 1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    for dir in dirs:
+        count += check_dir(dir, loc, map)
     return count
-    
+
+def check_dir(dir: tuple, loc: list, map: list) -> int:
+    seat = [loc[0] + dir[0], loc[1] + dir[1]]
+    if (isValidSeat(seat, map)):
+        if map[seat[0]][seat[1]] == "#":
+            return 1
+        elif map[seat[0]][seat[1]] == "L":
+            return 0
+        else:
+            return check_dir(dir, seat, map)
+    else: 
+        return 0
+
+def isValidSeat(seat: list, map: list) -> bool:
+    if seat[0] < 0:
+        return False
+    if seat[0] >= len(map):
+        return False
+    if seat[1] < 0:
+        return False
+    if seat[1] >= len(map[0]):
+        return False
+    return True
+
+
 print(part2())
