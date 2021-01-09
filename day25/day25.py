@@ -5,8 +5,8 @@ def part1():
     # card_public_key = 5764801
     # door_public_key = 17807724
 
-    #card_public_key = 5099500
-    #door_public_key = 7648211
+    card_public_key = 5099500
+    door_public_key = 7648211
 
     
     door_loop_size = get_loop_size(door_public_key)
